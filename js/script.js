@@ -1,9 +1,6 @@
-let money;
-let income;
-let addExpenses;
-let deposit;
-let mission;
-let perio;
-
-alert('Hello, World!');
-console.log('Hello, World!');
+let money = 1000,
+    income = 'Фриланс',
+    addExpenses = 'Интернет, такси, коммуналка',
+    deposite = true,
+    mission = 100000,
+    period = 6;
