@@ -1,35 +1,55 @@
 'use strict';
 
-let rang = prompt('Введите ru или en');
-let namePerson = prompt('Введите имя!');
-let ru = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-let en = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+let money = +prompt('Ваш месячный доход?'),
+  income = 'Фриланс',
+  addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую'),
+  deposite = confirm('Есть ли у вас депозит в банке?'),
+  period = 6,
+  mission = 100000,
+  expenses1 = prompt('Введите обязательную статью расходов?'),
+  amount1 = +prompt('Во сколько это обойдется?'),
+  expenses2 = prompt('Введите обязательную статью расходов?'),
+  amount2 = +prompt('Во сколько это обойдется?');
 
-let result = namePerson === 'Артем' ? console.log('Директор') : console.log('Студент');
-let anotherResult = namePerson === 'Максим' ? console.log('Преподаватель') : console.log('Студент');
+let accumulatedMonth = getAccumulatedMonth();
+let budgetDay = accumulatedMonth / 30;
+let missionComplete = mission / accumulatedMonth;
 
 
-if (rang === 'ru') {
-  console.log(ru.toString().split(','));
-} else if(rang === 'en') {
-  console.log(en.toString().split(','));
+function getExpensesMonth() {
+  return amount1 + amount2;
 }
 
-switch (rang) {
-  case 'ru': 
-    console.log(ru.toString().split(','));
-    break;
-  case 'en':
-    console.log(en.toString().split(','));
-    break;
-  default: 
-    console.log('eror');
+function getAccumulatedMonth() {
+  return money - amount1 - amount2;
 }
 
-let lang_array = [];
-lang_array['ru'] = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-lang_array['en'] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-let rang = 'ru';
-console.log(lang_array[lang]);
+function getTargetMonth() {
+  return mission / accumulatedMonth;
+}
+
+console.log(typeof money);
+console.log(typeof income);
+console.log(typeof deposite);
+console.log('Расходы за месяц: ' + getExpensesMonth());
+console.log('Возможные расходы: ' + addExpenses.split(','));
+console.log('Срок достижения цели: ' + getTargetMonth());
+console.log('Бюджет на день ' + Math.floor(budgetDay));
+
+// console.log('Период равен ' + period + ' месяцев');
+// console.log('Цель заработать ' + mission + '$');
+// console.log('Цель будет достигнута за ' + Math.ceil(missionComplete) + ' месяцев');
+// console.log('Бюджет на месяц ' + accumulatedMonth);
+
+// if (budgetDay >= 1200) {
+//   console.log('У вас высокий доход!')
+// } else if (budgetDay >= 600 && budgetDay <= 1200) {
+//   console.log('У вас средний доход!');
+// } else if (budgetDay <= 600) {
+//   console.log('К сожалению уровень доход ниже среднего');
+// } else if (budgetDay <= 0) {
+//   console.log('Что-то пошло не так...');
+// }
+
 
 
