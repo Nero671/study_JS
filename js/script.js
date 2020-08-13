@@ -1,16 +1,41 @@
 'use strict';
 
-function check(str) {
-  if (typeof str !== 'string') {
-    alert('Это не строка!');
-  } else if(str.length > 30) {
-     str = str.substr(0, 30) + '...';
+function quize() {
+  let quizeNumber = 66;
+  console.log(quizeNumber);
+  
+  let getNumber = function() {
+
+    let userGreeting = function(ask) {
+      if(ask) {
+        getNumber();
+      } else {
+        alert('Приходите еще!')
+      }
+    }
+
+  let userAnswer, writeNumber = +prompt('Угадай число от 1 до 100');
+    
+    if (writeNumber === null) {
+      alert('Приходите еще!');
+    } else if (writeNumber > quizeNumber) {
+      userAnswer = confirm('Загаданное число меньше');
+      userGreeting(userAnswer);
+    } else if (writeNumber < quizeNumber) {
+      userAnswer = confirm('Загаданное число больше');
+      userGreeting(userAnswer);
+    } else if (writeNumber === quizeNumber) {
+      alert('Вы выиграли!');
+    } else if (writeNumber !== 'number') {
+      userAnswer = confirm('Введите число!');
+      userGreeting(userAnswer);
+    } 
   }
-  console.log(str.trim());
+  return getNumber;
 }
 
-
-check(' dlfkmvlkdmfvlkdmfvkldskldmvklsdmvlkdsmfvlkdmflvkdmflvkdmf');
+let game = quize();
+game();
 
 
 
