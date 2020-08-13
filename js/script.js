@@ -10,7 +10,7 @@ function quize() {
       if(ask) {
         getNumber();
       } else {
-        alert('Приходите еще!')
+        alert('Приходите еще!');
       }
     }
 
