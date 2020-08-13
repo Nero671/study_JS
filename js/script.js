@@ -5,7 +5,7 @@ let isNumber = function (n) {
 }
 
 function quize() {
-  let quizeNumber = 66;
+  let quizeNumber = Math.floor(Math.random() * 101);
   let userAttempt = 10;
   console.log(quizeNumber);
 
@@ -39,7 +39,7 @@ function quize() {
     } else if (writeNumber === quizeNumber) {
       userAnswer = confirm('Поздравляю, Вы угадали!!!')
       if (userAnswer) {
-        quizeNumber = 66;
+        quizeNumber = Math.floor(Math.random() * 101);
         userAttempt = 10;
         game();
       }
@@ -54,7 +54,7 @@ function quize() {
     } else if (userAttempt === 1) {
       userAnswer = confirm('Попытки закончились, хотите сыграть еще?');
       if (userAnswer) {
-        quizeNumber = 66;
+        quizeNumber = Math.floor(Math.random() * 101);
         userAttempt = 10;
         console.log("Загаданное число", quizeNumber);
         game();
