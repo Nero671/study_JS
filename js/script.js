@@ -3,12 +3,14 @@
 function check(str) {
   if (typeof str !== 'string') {
     alert('Это не строка!');
-  } 
-  console.log(str.trim().substr(0, 30) + '...');
+  } else if(str.length > 30) {
+     str = str.substr(0, 30) + '...';
+  }
+  console.log(str.trim());
 }
 
 
-check(' dlfkmvlkdmfvlkdmfvkldmflvkmdflkvmaldkfvmlkdkfmvlkskdfmvblksdmfbklmsdfbklnfgkjbnfkjgbnskjfnbksjdfnbkjsnfgbkjsnfgbkjsfngkbjsnfbgkjn  ');
+check(' dlfkmvlkdmfvlkdmfvkldskldmvklsdmvlkdsmfvlkdmflvkdmflvkdmf');
 
 
 
