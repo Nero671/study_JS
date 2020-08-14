@@ -1,8 +1,13 @@
 'use strict';
 
+let isNumber = function (n) {
+  return !isNaN(parseFloat(n)) && isFinite(n)
+}
+
+
 function quize() {
-  let quizeNumber = 66;
-  console.log(quizeNumber);
+  let quizeNumber = Math.floor(Math.random() * 101);
+  console.log('Загаданное число: ' + quizeNumber);
   
   let getNumber = function() {
 
@@ -14,7 +19,7 @@ function quize() {
       }
     }
 
-  let userAnswer, writeNumber = +prompt('Угадай число от 1 до 100');
+    let userAnswer, writeNumber = prompt('Угадай число от 1 до 100');
     
     if (writeNumber === null) {
       alert('Приходите еще!');
@@ -24,12 +29,17 @@ function quize() {
     } else if (writeNumber < quizeNumber) {
       userAnswer = confirm('Загаданное число больше');
       userGreeting(userAnswer);
-    } else if (writeNumber === quizeNumber) {
-      alert('Вы выиграли!');
-    } else if (writeNumber !== 'number') {
-      userAnswer = confirm('Введите число!');
+    } else if (!isNumber(writeNumber) || parseFloat(writeNumber) > 100) {
+      userAnswer = confirm('Введите число от 0 до 100!');
       userGreeting(userAnswer);
-    } 
+    } else if (writeNumber == quizeNumber) {
+      alert('Вы выиграли!');
+      if (userAnswer) {
+        let quizeNumber = Math.floor(Math.random() * 101);
+        console.log('Загаданное число: ' + quizeNumber);
+        game();
+      }
+    }
   }
   return getNumber;
 }
