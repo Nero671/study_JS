@@ -101,7 +101,7 @@ let appData = {
   getInfoDeposite: function() {
     if(appData.deposite) {
       do {
-        appData.persentDeposite = +prompt('Какой годовой процент?', '10');
+        appData.persentDeposite = prompt('Какой годовой процент?', '10');
       } while (!isString(appData.persentDeposite));
       do {
         appData.moneyDeposite = prompt('Какая сумма заложена?', 10000);
@@ -128,6 +128,8 @@ for (let key in appData) {
 }
 
 console.log(appData.addExpenses.map((item) => item[0].toUpperCase() + item.slice(1)).join(', '));
+
+appData.getInfoDeposite();
 
 
 
