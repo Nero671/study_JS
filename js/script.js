@@ -101,8 +101,8 @@ let appData = {
   getInfoDeposite: function() {
     if(appData.deposite) {
       do {
-        appData.persentDeposite = prompt('Какой годовой процент?', '10');
-      } while (!isString(appData.persentDeposite));
+        appData.persentDeposite = prompt('Какой годовой процент?', 10);
+      } while (!isNumber(appData.persentDeposite));
       do {
         appData.moneyDeposite = prompt('Какая сумма заложена?', 10000);
       } while (!isNumber(appData.moneyDeposite));
