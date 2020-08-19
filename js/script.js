@@ -1,55 +1,53 @@
-'use strict';
+'use strict'
 
-const calendar = () => {
+const books = document.querySelector('.books');
+const book = document.querySelectorAll('.book');
+const img = document.querySelector('body');
+const adv = document.querySelector('.adv');
+const chapters = book[0].querySelector('ul').querySelectorAll('li');
+const chapters2 = book[5].querySelector('ul').querySelectorAll('li');
+const newElem = document.createElement('li');
 
-let text1 = document.querySelector('.text1');
-let text2 = document.querySelector('.text2');
+
+// books.prepend(book[5]);
+// books.prepend(book[3]);
+// books.prepend(book[4]);
+// books.prepend(book[0]);
+// books.prepend(book[1]);
+
+book[2].before(book[0]);
+book[2].before(book[4]);
+book[4].after(book[3]);
+book[2].before(book[5]);
+
+img.style.backgroundImage = 'url(./image/you-dont-know-js.jpg)';
+book[4].querySelector('h2').querySelector('a').textContent = 'Книга 3. this и Прототипы Объектов';
+
+adv.remove();
+
+chapters[2].before(chapters[3]);
+chapters[2].before(chapters[6]);
+chapters[2].before(chapters[8]);
+chapters[2].before(chapters[4]);
+chapters[2].before(chapters[5]);
+chapters[2].before(chapters[7]);
+chapters[2].before(chapters[9]);
+
+chapters2[2].before(chapters2[9]);
+chapters2[2].before(chapters2[3]);
+chapters2[2].before(chapters2[4]);
+chapters2[5].before(chapters2[6]);
+chapters2[5].before(chapters2[7]);
+
+newElem.textContent = 'Глава 8: За пределами ES6';
+
+book[2].querySelector('ul').append(newElem);
 
 
-  let Data = new Date();
-  let Year = Data.getFullYear();
-  let Month = Data.getMonth();
-  let Day = Data.getDay();
-  let dayNumber = Data.getDate();
-  let Hour = Data.getHours();
-  let Minutes = Data.getMinutes();
-  let Seconds = Data.getSeconds();
 
-  let week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-  let month = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
+const chapters6 = book[2].querySelector('ul').querySelectorAll('li');
+chapters6[9].before(chapters6[10])
 
-  let currentDay = week[Day - 1];
-  let currentMonth = month[Month];
-
-  // let changeHours = function() {
-  //   if(Hour === 1, 21, 00) {
-  //     document.write(' час ');
-  //   } else if(Hour === 2, 3, 4, 22, 23) {
-  //     document.write(' часа ');
-  //   } else {
-  //     document.write(' часов ');
-  //   }
-  // }
-
-  let addZero = elem => {
-    if (String(elem).length === 1) {
-      return '0' + elem;
-    } else {
-      return String(elem);
-    }
-  };
-
-  text1.textContent = ('Сегодня ' + currentDay + ', ' + dayNumber +
-    ' ' + currentMonth + ' ' + Year + ' года' +
-    ', ' + Hour + ' часов ' + Minutes + ' минут ' +
-    Seconds + ' секунд ');
-
-  text2.textContent = (addZero(dayNumber) + '.' + addZero(Month) + '.' + addZero(Year) + ' - ' +
-    addZero(Hour) + '.' + addZero(Minutes) + '.' + addZero(Seconds));
-
-}
-
-setInterval(calendar, 1000);
 
 
 
