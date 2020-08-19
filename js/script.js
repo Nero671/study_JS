@@ -2,6 +2,9 @@
 
 const calendar = () => {
 
+let text1 = document.querySelector('.text1');
+let text2 = document.querySelector('.text2');
+
 
   let Data = new Date();
   let Year = Data.getFullYear();
@@ -36,12 +39,12 @@ const calendar = () => {
     }
   };
 
-  document.write('Сегодня ' + currentDay + ', ' + dayNumber +
+  text1.textContent = ('Сегодня ' + currentDay + ', ' + dayNumber +
     ' ' + currentMonth + ' ' + Year + ' года' +
     ', ' + Hour + ' часов ' + Minutes + ' минут ' +
     Seconds + ' секунд ');
 
-  document.write(addZero(dayNumber) + '.' + addZero(Month) + '.' + addZero(Year) + ' - ' +
+  text2.textContent = (addZero(dayNumber) + '.' + addZero(Month) + '.' + addZero(Year) + ' - ' +
     addZero(Hour) + '.' + addZero(Minutes) + '.' + addZero(Seconds));
 
 }
