@@ -11,6 +11,7 @@ function addLi() {
     const elem = document.createElement('li');
     elem.innerHTML = input.value;
     list.append(elem);
+    input.value = '';
   }
 }
 
