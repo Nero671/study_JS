@@ -21,6 +21,8 @@ let periodSelect = document.querySelector('.period-select');
 let expensesItems = document.querySelectorAll('.expenses-items');
 let incomeItem = document.querySelectorAll('.income-items');
 let periodAmount = document.querySelector('.period-amount');
+let lettersSym = document.querySelectorAll('[placeholder="Наименование"]');
+let numSym = document.querySelectorAll('[placeholder="Сумма"]');
 
 let isNumber = function (n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -84,6 +86,8 @@ let appData = {
   addExpensesBlock: function() {
     // console.log(expensesItem.parentNode);
     let cloneExpensesItems = expensesItems[0].cloneNode(true);
+    cloneExpensesItems.querySelector('.expenses-title').value = '';
+    cloneExpensesItems.querySelector('.expenses-amount').value = '';
     expensesItems[0].parentNode.insertBefore(cloneExpensesItems, expensesAdd);
     expensesItems = document.querySelectorAll('.expenses-items');
     if(expensesItems.length === 3) {
@@ -130,6 +134,8 @@ let appData = {
   },
   addIncomeBlock: function() {
     let cloneIncomeItems = incomeItem[0].cloneNode(true);
+    cloneIncomeItems.querySelector('.income-title').value = '';
+    cloneIncomeItems.querySelector('.income-amount').value = '';
     incomeItem[0].parentNode.insertBefore(cloneIncomeItems, incomeAdd);
     incomeItem = document.querySelectorAll('.income-items');
     if (incomeItem.length === 3) {
@@ -213,18 +219,36 @@ salaryAmount.addEventListener('input', appData.startBlock);
 
 
 
+const addEventChangeText = event => {
+  let tmpValue = event.target.value;
+  const changeInputText = event => {
+    if (!/^[,. а-яА-ЯёЁ]+$/.test(event.target.value)) {
+      alert('Доупускается ввод только русских букв, пробела, точки и запятой!');
+      event.target.value = tmpValue;
+      event.target.removeEventListener('change', changeInputText);
+    }
+    tmpValue = event.target.value;
+  };
+  event.target.addEventListener('change', changeInputText);
+};
+document.querySelectorAll('[placeholder="Наименование"]').forEach(input => {
+  input.addEventListener('focus', addEventChangeText);
+});
+
+document.oninput = function() {
+  lettersSym.forEach(inpuе => {
+    inpuе.value = inpuе.value.replace(/^[А-Яа-яЁё\s]+$/, '');
+  });
+}
+
+document.oninput = function() {
+  numSym.forEach(input => {
+    input.value = input.value.replace(/[^\+\d]/g, '');
+  });
+}
 
 
-// console.log(appData.getTargetMonth());
-// console.log('Расходы за месяц: ' + appData.expensesMonth);
-// console.log(appData.getStatusIncome());
 
-
-// for (let key in appData) {
-//   console.log('Наша программа включает в себя данные: ' + key, appData[key]);
-// }
-
-// console.log(appData.addExpenses.map((item) => item[0].toUpperCase() + item.slice(1)).join(', '));
 
 appData.getInfoDeposite();
 console.log(appData);
