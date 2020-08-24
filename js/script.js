@@ -8,10 +8,8 @@ const todoControl = document.querySelector('.todo-control'),
       
 
 
-const todoData = localStorage.getItem('todoData') ? JSON.parse(localStorage.getItem('todoData')) : {
-  todoList: [],
-  todoCompleted: []
-};
+const todoData = JSON.parse(localStorage.getItem('todoData')) || [];
+
 
 const addToStorage = () => {
   localStorage.setItem('todoData', JSON.stringify(todoData));
