@@ -20,7 +20,7 @@ const render = function() {
   todoList.textContent = '';
   todoCompleted.textContent = '';
 
-  todoData.forEach(function(item) {
+  todoData.forEach(function(item, i) {
     const li = document.createElement('li');
     li.classList.add('todo-item');
     li.innerHTML = `
@@ -49,6 +49,7 @@ const render = function() {
 
     todoRemove.addEventListener('click', function() {
       li.remove();
+      todoData.splice(i, 1);
       addToStorage();
     });
   });
