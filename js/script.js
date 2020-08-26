@@ -211,10 +211,8 @@ let appData = {
   }
 };
 
-const foo = appData.start.bind(appData);
-
 appData.startBlock();
-start.addEventListener('click', foo);
+start.addEventListener('click', appData.start.bind(appData));
 expensesAdd.addEventListener('click', appData.addExpensesBlock);
 incomeAdd.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', appData.changeRange);
