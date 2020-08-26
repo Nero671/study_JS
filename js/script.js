@@ -34,7 +34,6 @@ let isString = function (str) {
     return isNaN(str);
   }
 } 
-  
 
 
 let appData = {
@@ -66,6 +65,7 @@ let appData = {
     if(start) {
       start.style.display = 'none';
       cansel.style.display = 'block';
+      this.blockInputs();
     }
   },
   blockInputs: function(disabled = true) {
@@ -74,12 +74,13 @@ let appData = {
     });
   },
   reset: function() {
-    for(let i = incomeItem.length - 1; i > 0; i--) {
-      incomeItem[0].parentNode.removeChild(incomeItem[i]);
-    }
-    for (let i = expensesItems.length - 1; i > 0; i--) {
-      expensesItems[0].parentNode.removeChild(expensesItems[i]);
-    }
+    // for(let i = incomeItem.length - 1; i > 0; i--) {
+    //   incomeItem[0].parentNode.removeChild(incomeItem[i]);
+    // }
+    // for (let i = expensesItems.length - 1; i > 0; i--) {
+    //   expensesItems[0].parentNode.removeChild(expensesItems[i]);
+    // }
+    
     incomeAdd.style.display = '';
     expensesAdd.style.display = '';
     appData.blockInputs(false);
@@ -112,13 +113,25 @@ let appData = {
     if(expensesItems.length === 3) {
       expensesAdd.style.display = 'none';
     }
+    let numbersOnly = document.querySelectorAll('.expenses-amount');
+    let letterssOnly = document.querySelectorAll('.expenses-title');
+    numbersOnly.forEach(input => {
+      input.addEventListener('keyup', function () {
+        input.value = input.value.replace(/[^\+\d]/g, '');
+      })
+    });
+    letterssOnly.forEach(input => {
+      input.addEventListener('keyup', function () {
+        input.value = input.value.replace(/[\d]/g, '');
+      })
+    });
   },
   getExpenses: function() {
     expensesItems.forEach((item) => {
       let itemExpenses = item.querySelector('.expenses-title').value;
       let cashExpenses = item.querySelector('.expenses-amount').value; 
       if(itemExpenses !== '' && cashExpenses !== '') {
-        this.expenses[itemExpenses] = cashExpenses; 
+        this.expenses[itemExpenses] = +cashExpenses; 
       } 
     });
   },
@@ -127,7 +140,7 @@ let appData = {
       let itemIncome = item.querySelector('.income-title').value;
       let cashIncome = item.querySelector('.income-amount').value;
       if (itemIncome !== '' && cashIncome !== '') {
-        this.addIncome[itemIncome] += +cashIncome;
+        this.addIncome[itemIncome] = +cashIncome;
         this.incomeMonth += +cashIncome; 
       }
     });
@@ -141,6 +154,18 @@ let appData = {
     if (incomeItem.length === 3) {
       incomeAdd.style.display = 'none';
     }
+    let numbersOnly = document.querySelectorAll('.income-amount');
+    let letterssOnly = document.querySelectorAll('.income-title');
+    numbersOnly.forEach(input => {
+      input.addEventListener('keyup', function () {
+        input.value = input.value.replace(/[^\+\d]/g, '');
+      })
+    });
+    letterssOnly.forEach(input => {
+      input.addEventListener('keyup', function () {
+        input.value = input.value.replace(/[\d]/g, '');
+      })
+    });
   },
   getAddExpenses: function() {
     let addExpenses = additionalExpensesItem.value.split(',');
@@ -219,34 +244,28 @@ salaryAmount.addEventListener('input', appData.startBlock);
 cansel.addEventListener('click', appData.reset);
 
 
-
-const addEventChangeText = event => {
-  let tmpValue = event.target.value;
-  const changeInputText = event => {
-    if (!/^[,. а-яА-ЯёЁ]+$/.test(event.target.value)) {
-      alert('Доупускается ввод только русских букв, пробела, точки и запятой!');
-      event.target.value = tmpValue;
-      event.target.removeEventListener('change', changeInputText);
-    }
-    tmpValue = event.target.value;
-  };
-  event.target.addEventListener('change', changeInputText);
-};
-document.querySelectorAll('[placeholder="Наименование"]').forEach(input => {
-  input.addEventListener('focus', addEventChangeText);
-});
-
-// document.oninput = function() {
-//   lettersSym.forEach(inpuе => {
-//     inpuе.value = inpuе.value.replace(/^[А-Яа-яЁё\s]+$/, '');
-//   });
-// }
-
-document.oninput = function() {
-  numSym.forEach(input => {
-    input.value = input.value.replace(/[^\+\d]/g, '');
+let onlyLetters = function () {
+  lettersSym.forEach(input => {
+    input.addEventListener('keyup', function () {
+      input.value = input.value.replace(/[\d]/g, '');
+    })
   });
 }
+
+let onlyNumbers = function () {
+  numSym.forEach(input => {
+    input.addEventListener('keyup', function () {
+      input.value = input.value.replace(/[^\+\d]/g, '');
+    })
+  });
+}
+
+onlyNumbers();
+onlyLetters();
+
+
+
+
 
 
 
