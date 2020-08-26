@@ -9,7 +9,7 @@ let randomColor = function() {
   let letters16 = '0123456789ABCDEF';
   let colorTag = '#';
   for(let i = 0; i < 6; i++) {
-    colorTag += [Math.floor(Math.random() * 16)];
+    colorTag += letters16[Math.floor(Math.random() * 16)];
   } 
   return colorTag;
 }
