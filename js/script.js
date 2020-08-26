@@ -74,22 +74,17 @@ let appData = {
     });
   },
   reset: function() {
-    // for(let i = incomeItem.length - 1; i > 0; i--) {
-    //   incomeItem[0].parentNode.removeChild(incomeItem[i]);
-    // }
-    // for (let i = expensesItems.length - 1; i > 0; i--) {
-    //   expensesItems[0].parentNode.removeChild(expensesItems[i]);
-    // }
-    
-    incomeAdd.style.display = '';
-    expensesAdd.style.display = '';
+    incomeItem.forEach(item => {
+      item.value = '';
+    });
+    expensesItems.forEach(item => {
+      item.value = '';
+    });
     appData.blockInputs(false);
     document.querySelectorAll('input[type=text]').forEach(item => {
       item.value = '';
     });
-    appData.getBudget();
     periodSelect.value = document.querySelector('.period-amount').textContent = 1;
-    appData.startBlock();
     start.style.display = 'block';
     cansel.style.display = 'none';
   },
@@ -140,7 +135,7 @@ let appData = {
       let itemIncome = item.querySelector('.income-title').value;
       let cashIncome = item.querySelector('.income-amount').value;
       if (itemIncome !== '' && cashIncome !== '') {
-        this.addIncome[itemIncome] = +cashIncome;
+        this.addIncome[itemIncome] += +cashIncome;
         this.incomeMonth += +cashIncome; 
       }
     });
