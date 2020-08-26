@@ -5,16 +5,16 @@ let color = document.getElementById('color');
 let body = document.querySelector('body');
 
 
-let randomColor = function() {
+let randomColor = function () {
   let letters16 = '0123456789ABCDEF';
   let colorTag = '#';
-  for(let i = 0; i < 6; i++) {
+  for (let i = 0; i < 6; i++) {
     colorTag += letters16[Math.floor(Math.random() * 16)];
-  } 
+  }
   return colorTag;
 }
 
-let changeColor = function() {
+let changeColor = function () {
   body.style.backgroundColor = randomColor();
   color.textContent = randomColor();
 }
