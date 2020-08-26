@@ -1,7 +1,7 @@
 'use strict';
 
 let start = document.getElementById('start');
-let cansel = document.getElementById('cancel')
+let cansel = document.getElementById('cancel');
 let incomeAdd = document.getElementsByTagName('button')[0];
 let expensesAdd = document.getElementsByTagName('button')[1];
 let depositCheck = document.querySelector('.deposit-check');
@@ -66,10 +66,15 @@ let appData = {
       cansel.style.display = 'block';
       this.blockInputs();
     }
+    
   },
   blockInputs: function(disabled = true) {
       document.querySelectorAll('input[type=text]').forEach(item => {
         item.disabled = disabled;
+        // if (item.disabled = disabled) {
+        //   expensesAdd.disabled = disabled;
+        //   incomeAdd.disabled = disabled;
+        // }
     });
   },
   reset: function() {
@@ -246,12 +251,5 @@ let onlyNumbers = function () {
 
 onlyNumbers();
 onlyLetters();
-
-
-
-
-
-
-
 
 appData.getInfoDeposite();
