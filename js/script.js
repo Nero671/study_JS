@@ -22,8 +22,7 @@ let periodSelect = document.querySelector('.period-select');
 let expensesItems = document.querySelectorAll('.expenses-items');
 let incomeItem = document.querySelectorAll('.income-items');
 let periodAmount = document.querySelector('.period-amount');
-let lettersSym = document.querySelectorAll('[placeholder="Наименование"]');
-let numSym = document.querySelectorAll('[placeholder="Сумма"]');
+
 
 let isNumber = function (n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -74,11 +73,17 @@ let appData = {
     });
   },
   reset: function() {
-    incomeItem.forEach(item => {
-      item.value = '';
+    incomeItem = document.querySelectorAll('.income-items');
+    expensesItems = document.querySelectorAll('.expenses-items');
+    incomeItem.forEach((item, index) => {
+      if(index !== 0) {
+        item.remove();
+      }
     });
-    expensesItems.forEach(item => {
-      item.value = '';
+    expensesItems.forEach((item, index) => {
+      if (index !== 0) {
+        item.remove();
+      }
     });
     appData.blockInputs(false);
     document.querySelectorAll('input[type=text]').forEach(item => {
@@ -108,20 +113,11 @@ let appData = {
     if(expensesItems.length === 3) {
       expensesAdd.style.display = 'none';
     }
-    let numbersOnly = document.querySelectorAll('.expenses-amount');
-    let letterssOnly = document.querySelectorAll('.expenses-title');
-    numbersOnly.forEach(input => {
-      input.addEventListener('keyup', function () {
-        input.value = input.value.replace(/[^\+\d]/g, '');
-      })
-    });
-    letterssOnly.forEach(input => {
-      input.addEventListener('keyup', function () {
-        input.value = input.value.replace(/[\d]/g, '');
-      })
-    });
+    onlyNumbers();
+    onlyLetters();
   },
   getExpenses: function() {
+    expensesItems = document.querySelectorAll('.expenses-items');
     expensesItems.forEach((item) => {
       let itemExpenses = item.querySelector('.expenses-title').value;
       let cashExpenses = item.querySelector('.expenses-amount').value; 
@@ -131,11 +127,12 @@ let appData = {
     });
   },
   getIncome: function() {
+    incomeItem = document.querySelectorAll('.income-items');
     incomeItem.forEach((item) => {
       let itemIncome = item.querySelector('.income-title').value;
       let cashIncome = item.querySelector('.income-amount').value;
       if (itemIncome !== '' && cashIncome !== '') {
-        this.addIncome[itemIncome] += +cashIncome;
+        this.addIncome[itemIncome] = +cashIncome;
         this.incomeMonth += +cashIncome; 
       }
     });
@@ -149,18 +146,8 @@ let appData = {
     if (incomeItem.length === 3) {
       incomeAdd.style.display = 'none';
     }
-    let numbersOnly = document.querySelectorAll('.income-amount');
-    let letterssOnly = document.querySelectorAll('.income-title');
-    numbersOnly.forEach(input => {
-      input.addEventListener('keyup', function () {
-        input.value = input.value.replace(/[^\+\d]/g, '');
-      })
-    });
-    letterssOnly.forEach(input => {
-      input.addEventListener('keyup', function () {
-        input.value = input.value.replace(/[\d]/g, '');
-      })
-    });
+    onlyNumbers();
+    onlyLetters();
   },
   getAddExpenses: function() {
     let addExpenses = additionalExpensesItem.value.split(',');
@@ -240,6 +227,7 @@ cansel.addEventListener('click', appData.reset);
 
 
 let onlyLetters = function () {
+  let lettersSym = document.querySelectorAll('[placeholder="Наименование"]');
   lettersSym.forEach(input => {
     input.addEventListener('keyup', function () {
       input.value = input.value.replace(/[\d]/g, '');
@@ -248,6 +236,7 @@ let onlyLetters = function () {
 }
 
 let onlyNumbers = function () {
+  let numSym = document.querySelectorAll('[placeholder="Сумма"]');
   numSym.forEach(input => {
     input.addEventListener('keyup', function () {
       input.value = input.value.replace(/[^\+\d]/g, '');
