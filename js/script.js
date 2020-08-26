@@ -1,6 +1,7 @@
 'use strict';
 
 let start = document.getElementById('start');
+let cansel = document.getElementById('cancel')
 let incomeAdd = document.getElementsByTagName('button')[0];
 let expensesAdd = document.getElementsByTagName('button')[1];
 let depositCheck = document.querySelector('.deposit-check');
@@ -62,14 +63,10 @@ let appData = {
     this.getBudget();
     this.showResult();
 
-    if(start.textContent === 'Расчитать') {
-      this.blockInputs();
-      start.textContent = 'Сбросить';
-    } else {
-      start.textContent = 'Расчитать';
-      this.reset();
+    if(start) {
+      start.style.display = 'none';
+      cansel.style.display = 'block';
     }
-
   },
   blockInputs: function(disabled = true) {
       document.querySelectorAll('input[type=text]').forEach(item => {
@@ -85,13 +82,15 @@ let appData = {
     }
     incomeAdd.style.display = '';
     expensesAdd.style.display = '';
-    this.blockInputs(false);
+    appData.blockInputs(false);
     document.querySelectorAll('input[type=text]').forEach(item => {
       item.value = '';
     });
-    this.getBudget();
+    appData.getBudget();
     periodSelect.value = document.querySelector('.period-amount').textContent = 1;
-    this.startBlock();
+    appData.startBlock();
+    start.style.display = 'block';
+    cansel.style.display = 'none';
   },
   showResult: function() {
     budgetMonthValue.value = this.budgetMonth;
@@ -217,6 +216,7 @@ expensesAdd.addEventListener('click', appData.addExpensesBlock);
 incomeAdd.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', appData.changeRange);
 salaryAmount.addEventListener('input', appData.startBlock);
+cansel.addEventListener('click', appData.reset);
 
 
 
