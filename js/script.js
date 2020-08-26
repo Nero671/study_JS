@@ -254,4 +254,3 @@ document.oninput = function() {
 
 
 appData.getInfoDeposite();
-console.log(appData);
