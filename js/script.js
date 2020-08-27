@@ -56,8 +56,7 @@ AppData.prototype.start = function () {
   this.budget = +salaryAmount.value;
   console.log(salaryAmount.value);
 
-  this.getExpenses();
-  this.getIncome();
+  this.getExpInc();
   this.getExpensesMonth();
   this.getInfoDeposite();
   this.getAddExpenses();
@@ -128,48 +127,31 @@ AppData.prototype.reset = function () {
     targetMonthValue.value = Math.ceil(this.getTargetMonth());
     incomePeriodValue.value = this.calcSaveMoney();
   };
-  AppData.prototype.addExpensesBlock = function () {
-    // console.log(expensesItem.parentNode);
-    let cloneExpensesItems = expensesItems[0].cloneNode(true);
-    cloneExpensesItems.querySelector('.expenses-title').value = '';
-    cloneExpensesItems.querySelector('.expenses-amount').value = '';
-    expensesItems[0].parentNode.insertBefore(cloneExpensesItems, expensesAdd);
-    expensesItems = document.querySelectorAll('.expenses-items');
-    if (expensesItems.length === 3) {
-      expensesAdd.style.display = 'none';
+  AppData.prototype.getExpInc = function() {
+    const count = item => {
+      const startStr = item.className.split('-')[0];
+      const itemTitle = item.querySelector(`.${startStr}-title`).value;
+      const itemAmount = item.querySelector(`.${startStr}-amount`).value;
+      if (itemTitle !== '' && itemAmount !== '') {
+        this[startStr][itemTitle] = +itemAmount;
+      }
     }
-    onlyNumbers();
-    onlyLetters();
+    incomeItem.forEach(count);
+    expensesItems.forEach(count);
+    
+    for(const key in this.income) {
+      this.incomeMonth += this.income[key];
+    }
   };
-  AppData.prototype.getExpenses = function () {
-    expensesItems = document.querySelectorAll('.expenses-items');
-    expensesItems.forEach((item) => {
-      let itemExpenses = item.querySelector('.expenses-title').value;
-      let cashExpenses = item.querySelector('.expenses-amount').value;
-      if (itemExpenses !== '' && cashExpenses !== '') {
-        this.expenses[itemExpenses] = +cashExpenses;
-      }
-    });
-  };
-  AppData.prototype.getIncome = function () {
-    incomeItem = document.querySelectorAll('.income-items');
-    incomeItem.forEach((item) => {
-      let itemIncome = item.querySelector('.income-title').value;
-      let cashIncome = item.querySelector('.income-amount').value;
-      if (itemIncome !== '' && cashIncome !== '') {
-        this.addIncome[itemIncome] = +cashIncome;
-        this.incomeMonth += +cashIncome;
-      }
-    });
-  };
-  AppData.prototype.addIncomeBlock = function () {
-    let cloneIncomeItems = incomeItem[0].cloneNode(true);
-    cloneIncomeItems.querySelector('.income-title').value = '';
-    cloneIncomeItems.querySelector('.income-amount').value = '';
-    incomeItem[0].parentNode.insertBefore(cloneIncomeItems, incomeAdd);
-    incomeItem = document.querySelectorAll('.income-items');
-    if (incomeItem.length === 3) {
-      incomeAdd.style.display = 'none';
+  AppData.prototype.addIncExpBlock = function() {
+    const target = event.target;
+    const startStr = target.parentNode.className;
+    const cloneItem = document.querySelector(`.${startStr}-items`).cloneNode(true);
+    cloneItem.querySelector(`.${startStr}-title`).value = '';
+    cloneItem.querySelector(`.${startStr}-amount`).value = '';
+    target.parentNode.insertBefore(cloneItem, target);
+    if (document.querySelectorAll(`.${startStr}-items`).length === 3) {
+      target.style.display = 'none';
     }
     onlyNumbers();
     onlyLetters();
@@ -238,8 +220,8 @@ AppData.prototype.reset = function () {
   };
   AppData.prototype.eventListeners = function() {
     start.addEventListener('click', appData.start.bind(appData));
-    expensesAdd.addEventListener('click', appData.addExpensesBlock);
-    incomeAdd.addEventListener('click', appData.addIncomeBlock);
+    expensesAdd.addEventListener('click', appData.addIncExpBlock);
+    incomeAdd.addEventListener('click', appData.addIncExpBlock);
     periodSelect.addEventListener('input', appData.changeRange);
     salaryAmount.addEventListener('input', appData.startBlock);
     cansel.addEventListener('click', appData.reset.bind(appData));
