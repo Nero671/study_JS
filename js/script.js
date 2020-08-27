@@ -15,8 +15,8 @@ DomElement.prototype.newElem = function() {
     elem.className = this.selector.slice(1);
   }
   if (this.selector[0] === '#') {
-    elem = document.createElement('div')
-    elem.className = this.selector.slice(1);
+    elem = document.createElement('divgot')
+    elem.id = this.selector.slice(1);
   }
   elem.style.cssText = `
     height: ${this.height}px;
@@ -28,6 +28,8 @@ DomElement.prototype.newElem = function() {
 }
 
 let elem1 = new DomElement('.block', 100, 100, 'red', 20);
+let elem2 = new DomElement('#block', 100, 100, 'red', 20);
 
 document.body.appendChild(elem1.newElem());
+document.body.appendChild(elem2.newElem());
 
