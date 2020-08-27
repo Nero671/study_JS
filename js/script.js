@@ -15,7 +15,7 @@ DomElement.prototype.newElem = function() {
     elem.className = this.selector.slice(1);
   }
   if (this.selector[0] === '#') {
-    elem = document.createElement('divgot')
+    elem = document.createElement('div')
     elem.id = this.selector.slice(1);
   }
   elem.style.cssText = `
