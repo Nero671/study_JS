@@ -40,19 +40,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.body.appendChild(elem1.newElem());
 
-  document.addEventListener('keyup', event => {
+  document.addEventListener('keydown', event => {
     let div = document.querySelector('div');
+
+    let elemStyle = git (div);
     if(event.key === 'ArrowUp') {
-      div.style.top = px + 'px';
+      div.style.top = parseFloat(elemStyle.top) - 10 + 'px';
     }
     if (event.key === 'ArrowDown') {
-      div.style.down = px + 'px';
+      div.style.top = parseFloat(elemStyle.top) + 10 + 'px';
     }
-    if (event.key === 'Arrowleft') {
-      div.style.left = px + 'px';
+    if (event.key === 'ArrowLeft') {
+      div.style.left = parseFloat(elemStyle.left) - 10 + 'px';
     }
     if (event.key === 'ArrowRight') {
-      div.style.right = px + 'px';
+      div.style.left = parseFloat(elemStyle.left) + 10 + 'px';
     }
   });
 });
