@@ -1,25 +1,33 @@
 'use strict';
 
-let change = document.getElementById('change');
-let color = document.getElementById('color');
-let body = document.querySelector('body');
-
-
-let randomColor = function() {
-  let letters16 = '0123456789ABCDEF';
-  let colorTag = '#';
-  for(let i = 0; i < 6; i++) {
-    colorTag += letters16[Math.floor(Math.random() * 16)];
-  } 
-  return colorTag;
+function DomElement(selector, height, width, bg, fontSize) {
+  this.selector = selector;
+  this.height = height;
+  this.width = width;
+  this.bg = bg;
+  this.fontSize = fontSize;
 }
 
-let changeColor = function() {
-  body.style.backgroundColor = randomColor();
-  color.textContent = randomColor();
+DomElement.prototype.newElem = function() {
+  let elem;
+  if(this.selector[0] === '.') {
+    elem = document.createElement('div');
+    elem.className = this.selector.slice(1);
+  }
+  if (this.selector[0] === '#') {
+    elem = document.createElement('div')
+    elem.className = this.selector.slice(1);
+  }
+  elem.style.cssText = `
+    height: ${this.height}px;
+    width: ${this.width}px;
+    background: ${this.bg};
+    font-size: ${this.fontSize}px;
+  `;
+  return elem;
 }
 
+let elem1 = new DomElement('.block', 100, 100, 'red', 20);
 
-
-change.addEventListener('click', changeColor);
+document.body.appendChild(elem1.newElem());
 
