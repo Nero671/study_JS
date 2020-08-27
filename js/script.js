@@ -71,13 +71,28 @@ let appData = {
   blockInputs: function(disabled = true) {
       document.querySelectorAll('input[type=text]').forEach(item => {
         item.disabled = disabled;
-        // if (item.disabled = disabled) {
-        //   expensesAdd.disabled = disabled;
-        //   incomeAdd.disabled = disabled;
-        // }
+        if (item.disabled = disabled) {
+          expensesAdd.style.display = 'none';
+          incomeAdd.style.display = 'none';
+        } else {
+          expensesAdd.style.display = 'block';
+          incomeAdd.style.display = 'block';
+        }
     });
   },
   reset: function() {
+    this.income = {};
+    this.incomeMonth = 0;
+    this.addIncome = [];
+    this.expenses = {};
+    this.addExpenses = [];
+    this.deposite = false;
+    this.persentDeposite = 0;
+    this.moneyDeposite = 0;
+    this.budget = 0;
+    this.budgetDay = 0;
+    this.budgetMonth = 0;
+    this.expensesMonth = 0;
     incomeItem = document.querySelectorAll('.income-items');
     expensesItems = document.querySelectorAll('.expenses-items');
     incomeItem.forEach((item, index) => {
@@ -182,11 +197,6 @@ let appData = {
   },
   getTargetMonth: function () {
     return targetAmount.value / this.budgetMonth;
-    // if (targetMonthResult > 0) {
-    //   return 'Срок достижения цели: ' + Math.floor(targetMonthResult) + ' м.';
-    // } else {
-    //   return 'Цель не будет достигнута';
-    // }
   },
   getStatusIncome: function () {
     if (this.budgetDay >= 1200) {
@@ -228,7 +238,7 @@ expensesAdd.addEventListener('click', appData.addExpensesBlock);
 incomeAdd.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', appData.changeRange);
 salaryAmount.addEventListener('input', appData.startBlock);
-cansel.addEventListener('click', appData.reset);
+cansel.addEventListener('click', appData.reset.bind(appData));
 
 
 let onlyLetters = function () {
