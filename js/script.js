@@ -50,9 +50,9 @@ class AppData {
     this.budgetMonth = 0;
     this.expensesMonth = 0; 
   }
-};
 
-AppData.prototype.start = function () {
+
+start () {
   this.budget = +salaryAmount.value;
   console.log(salaryAmount.value);
 
@@ -72,7 +72,7 @@ AppData.prototype.start = function () {
 
 };
 
-AppData.prototype.blockInputs = function (disabled = true) {
+blockInputs (disabled = true) {
   document.querySelectorAll('input[type=text]').forEach(item => {
     item.disabled = disabled;
     if (item.disabled = disabled) {
@@ -85,7 +85,7 @@ AppData.prototype.blockInputs = function (disabled = true) {
   });
 };
 
-AppData.prototype.reset = function () {
+reset () {
     this.income = {};
     this.incomeMonth = 0;
     this.addIncome = [];
@@ -118,7 +118,7 @@ AppData.prototype.reset = function () {
     start.style.display = 'block';
     cansel.style.display = 'none';
   };
-  AppData.prototype.showResult = function () {
+  showResult () {
     budgetMonthValue.value = this.budgetMonth;
     budgetDayValue.value = Math.round(this.budgetDay);
     expensesMonthValue.value = this.expensesMonth;
@@ -127,7 +127,7 @@ AppData.prototype.reset = function () {
     targetMonthValue.value = Math.ceil(this.getTargetMonth());
     incomePeriodValue.value = this.calcSaveMoney();
   };
-  AppData.prototype.getExpInc = function() {
+  getExpInc () {
     const count = item => {
       const startStr = item.className.split('-')[0];
       const itemTitle = item.querySelector(`.${startStr}-title`).value;
@@ -143,7 +143,7 @@ AppData.prototype.reset = function () {
       this.incomeMonth += this.income[key];
     }
   };
-  AppData.prototype.addIncExpBlock = function() {
+  addIncExpBlock () {
     const target = event.target;
     const startStr = target.parentNode.className;
     const cloneItem = document.querySelector(`.${startStr}-items`).cloneNode(true);
@@ -156,7 +156,7 @@ AppData.prototype.reset = function () {
     onlyNumbers();
     onlyLetters();
   };
-  AppData.prototype.getAddExpenses = function () {
+  getAddExpenses () {
     let addExpenses = additionalExpensesItem.value.split(',');
     addExpenses.forEach((item) => {
       item = item.trim();
@@ -165,7 +165,7 @@ AppData.prototype.reset = function () {
       }
     });
   };
-  AppData.prototype.getAddIncome = function () {
+  getAddIncome () {
     additionalIncomeItem.forEach((item) => {
       let itemValue = item.value.trim();
       if (itemValue !== '') {
@@ -173,19 +173,19 @@ AppData.prototype.reset = function () {
       }
     });
   };
-  AppData.prototype.getExpensesMonth = function () {
+  getExpensesMonth () {
     for (let key in this.expenses) {
       this.expensesMonth += +this.expenses[key];
     }
   };
-  AppData.prototype.getBudget = function () {
+  getBudget () {
     this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
     this.budgetDay = this.budgetMonth / 30;
   };
-  AppData.prototype.getTargetMonth = function () {
+  getTargetMonth () {
     return targetAmount.value / this.budgetMonth;
   };
-  AppData.prototype.getStatusIncome = function () {
+  getStatusIncome () {
     if (this.budgetDay >= 1200) {
       return ('У вас высокий доход!')
     } else if (this.budgetDay >= 600 && this.budgetDay < 1200) {
@@ -196,7 +196,7 @@ AppData.prototype.reset = function () {
       return ('Что-то пошло не так...');
     }
   };
-  AppData.prototype.getInfoDeposite = function () {
+  getInfoDeposite () {
     if (this.deposite) {
       do {
         this.persentDeposite = prompt('Какой годовой процент?', 10);
@@ -206,19 +206,19 @@ AppData.prototype.reset = function () {
       } while (!isNumber(this.moneyDeposite));
     }
   };
-  AppData.prototype.calcSaveMoney = function () {
+  calcSaveMoney () {
     return this.budgetMonth * periodSelect.value;
   };
-  AppData.prototype.changeRange = function (event) {
+  changeRange (event) {
     const _this = this;
     let target = event.target;
     periodAmount.textContent = target.value;
     incomePeriodValue.value = appData.calcSaveMoney();
   };
-  AppData.prototype.startBlock = function () {
-    start.disabled = !salaryAmount.value.trim();
+  startBlock () {
+    start.disabled = !salaryAmount
   };
-  AppData.prototype.eventListeners = function() {
+  eventListeners () {
     start.addEventListener('click', appData.start.bind(appData));
     expensesAdd.addEventListener('click', appData.addIncExpBlock);
     incomeAdd.addEventListener('click', appData.addIncExpBlock);
@@ -226,6 +226,8 @@ AppData.prototype.reset = function () {
     salaryAmount.addEventListener('input', appData.startBlock);
     cansel.addEventListener('click', appData.reset.bind(appData));
   };
+
+};
 
 const appData = new AppData();
 appData.eventListeners();
