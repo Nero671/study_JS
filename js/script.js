@@ -73,6 +73,24 @@ start () {
     this.blockInputs();
   }
 
+  localStorage.setItem('budgetMonthValue', budgetMonthValue.value);
+  localStorage.setItem('budgetDayValue', budgetDayValue.value);
+  localStorage.setItem('expensesMonthValue', expensesMonthValue.value);
+  localStorage.setItem('additionalIncomeValue', additionalIncomeValue.value);
+  localStorage.setItem('additionalExpensesValue', additionalExpensesValue.value);
+  localStorage.setItem('incomePeriodValue', incomePeriodValue.value);
+  localStorage.setItem('targetMonthValue', incomePeriodValue.value);
+  localStorage.setItem('isLoad', true);
+
+  // this.setCookie('budgetMonthValue', budgetMonthValue.value);
+  // this.setCookie('budgetDayValue', budgetDayValue.value);
+  // this.setCookie('expensesMonthValue', expensesMonthValue.value);
+  // this.setCookie('additionalIncomeValue', additionalIncomeValue.value);
+  // this.setCookie('additionalExpensesValue', additionalExpensesValue.value);
+  // this.setCookie('incomePeriodValue', incomePeriodValue.value);
+  // this.setCookie('targetMonthValue', targetMonthValue.value);
+  // this.setCookie('isLoad', true);
+
 };
 
 blockInputs (disabled = true) {
@@ -127,6 +145,8 @@ reset () {
     depositPercent.style.display = 'none';
     depositBank.value = '';
     depositAmount.value = '';
+
+    localStorage.clear();
   };
   showResult () {
     budgetMonthValue.value = this.budgetMonth;
@@ -260,6 +280,58 @@ reset () {
       depositBank.removeEventListener('change', this.cahngePercent);
     }
   };
+  //создание куков
+  // setCookie(name, value, options = {}) {
+  //     options = {
+  //       path: '/',
+  //       expires: new Date(Date.now()), 
+  //       ...options
+  //     };
+
+  //     if(options.expires instanceof Date) {
+  //       options.expires = options.expires.toUTCString()
+  //     }
+
+  //     let updateCookie = name + '=' + value;
+
+  //     for (let optionKey in options) {
+  //       updateCookie += "; " + optionKey;
+  //       let optionValue = options[optionKey];
+  //       if (optionValue !== true) {
+  //         updateCookie += "=" + optionValue;
+  //       }
+  //     }
+  //     document.cookie = updateCookie;
+  // };
+  // deleteAllCookies() {
+  //   const cookies = document.cookie.split(";");
+  //   for (let i = 0; i < cookies.length; i++) {
+  //     this.deleteCookie(cookies[i].split("=")[0]);
+  //   }
+  // };
+  // deleteCookie(name) {
+  //   this.setCookie(name, "", {
+  //     'max-age': -1
+  //   });
+  // };
+  // checkLSCookie() {
+  //   const cookies = document.cookie.split("; ");
+
+  //   outer:
+  //     for (let i = 0; i < localStorage.length; i++) {
+  //       for (let j = 0; j < cookies.length; j++) {
+  //         if (localStorage.key(i) === cookies[j].split("=")[0]) {
+  //           continue outer;
+  //         }
+  //       }
+  //       this.reset();
+  //       this.deleteAllCookies();
+  //     }
+  //   if (cookies.length !== 8) {
+  //     this.reset();
+  //     this.deleteAllCookies();
+  //   }
+  // };
   eventListeners () {
     start.addEventListener('click', this.start.bind(this));
     expensesAdd.addEventListener('click', this.addIncExpBlock);
@@ -268,6 +340,29 @@ reset () {
     salaryAmount.addEventListener('input', this.startBlock);
     cansel.addEventListener('click', this.reset.bind(this));
     depositCheck.addEventListener('change', this.depositeHandler.bind(this));
+
+    budgetMonthValue.value = localStorage.getItem('budgetMonthValue');
+    budgetDayValue.value = localStorage.getItem('budgetDayValue');
+    expensesMonthValue.value = localStorage.getItem('expensesMonthValue');
+    additionalIncomeValue.value = localStorage.getItem('additionalIncomeValue');
+    additionalExpensesValue.value = localStorage.getItem('additionalExpensesValue');
+    incomePeriodValue.value = localStorage.getItem('incomePeriodValue');
+    targetMonthValue.value = localStorage.getItem('targetMonthValue');
+
+    if(localStorage.getItem('isLoad')) {
+      document.querySelectorAll('input[type=text]').forEach(item => {
+        item.disabled = true;
+      });
+      start.style.display = 'none';
+      cansel.style.display = 'block';
+    } else {
+      document.querySelectorAll('input[type=text]').forEach(item => {
+        item.disabled = false;
+      });
+      start.style.display = 'block';
+      cansel.style.display = 'none';
+    }
+    // this.checkLSCookie();
   };
 
 };
