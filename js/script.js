@@ -370,7 +370,7 @@ reset () {
 const appData = new AppData();
 appData.eventListeners();
 
-console.log(appData);
+// console.log(appData);
 
 
 
