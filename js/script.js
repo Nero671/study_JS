@@ -41,13 +41,13 @@ const registration = function() {
 const render = () => {
   list.textContent = '';
   localStorage.setItem('userData', JSON.stringify(userData));
-  userData.forEach(index => {
+  userData.forEach((item, index) => {
     let li = document.createElement('li');
     li.style.display = 'flex';
     li.innerHTML = `
-      Имя: ${user.name}, фамилия: ${user.surname}, зарегистрирован: ${user.date}       <button class="cansel">X</button>;
+      Имя: ${item.name}, фамилия: ${item.surname}, зарегистрирован: ${item.date}       <button class="cansel">X</button>;
     `;
-    list.appendChild(li);
+    list.append(li);
 
     const cansel = li.querySelector('.cansel');
     cansel.addEventListener('click', () => {
