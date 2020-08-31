@@ -10,6 +10,7 @@ let user = {};
 let date = new Date();
 let month = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
 let userData = JSON.parse(localStorage.getItem('userData') || '[]');
+let userLogin;
 
 let isString = function (str) {
   if (Number.isNaN(Number(str))) {
@@ -18,14 +19,12 @@ let isString = function (str) {
 }
 
 const registration = function() {
-  let userLogin = prompt('Введите через пробел имя и фамилию пользователя:', '').trim();
-  userFullLogin = userLogin.split(' ');
-  if(!isString(userLogin) || userFullLogin.length !== 2) {
-    alert('Введите корректные данные')
-  } else {
+  do {
+    userLogin = prompt('Введите через пробел имя и фамилию пользователя:', '').trim();
+    userFullLogin = userLogin.split(' ');
     user.name = userFullLogin[0];
     user.surname = userFullLogin[1];
-  }
+  } while (!isString(userLogin) || userFullLogin.length !== 2);
   user.login = prompt('Введите логин:', '').trim();
   user.password = prompt('Введите пароль:', '').trim();
   user.date = date.getDate() + ' ' + month[date.getMonth() + 1] + ' ' 
