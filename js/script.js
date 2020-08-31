@@ -143,7 +143,7 @@ reset () {
     depositBank.style.display = 'none';
     depositAmount.style.display = 'none';
     depositPercent.style.display = 'none';
-    depositBank.value = '';
+    depositBank.selectedIndex = 0;
     depositAmount.value = '';
 
     localStorage.clear();
@@ -174,7 +174,7 @@ reset () {
     }
   };
   addIncExpBlock () {
-    const target = event.target;
+    const target = event.target;deposit-bank
     const startStr = target.parentNode.className;
     const cloneItem = document.querySelector(`.${startStr}-items`).cloneNode(true);
     cloneItem.querySelector(`.${startStr}-title`).value = '';
@@ -209,7 +209,7 @@ reset () {
     }
   };
   getBudget () {
-    const monthDeposite = this.moneyDeposite * this.persentDeposite;
+    const monthDeposite = this.moneyDeposite * (this.persentDeposite / 100);
     this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth + monthDeposite;
     this.budgetDay = this.budgetMonth / 30;
   };
@@ -259,6 +259,8 @@ reset () {
           start.disabled = false;
         }
       });
+    } else if(valueSelect === '0') {
+      depositPercent.style.display = 'none';
     } else {
       depositPercent.value = valueSelect;
       depositPercent.disabled = true;
@@ -273,7 +275,7 @@ reset () {
     } else {
       depositBank.style.display = 'none';
       depositAmount.style.display = 'none';
-      depositBank.value = '';
+      depositBank.value === 'Процент';
       depositAmount.value = '';
       depositPercent.value = '';
       this.deposite = false;
