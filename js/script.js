@@ -79,17 +79,17 @@ start () {
   localStorage.setItem('additionalIncomeValue', additionalIncomeValue.value);
   localStorage.setItem('additionalExpensesValue', additionalExpensesValue.value);
   localStorage.setItem('incomePeriodValue', incomePeriodValue.value);
-  localStorage.setItem('targetMonthValue', incomePeriodValue.value);
+  localStorage.setItem('targetMonthValue', targetMonthValue.value);
   localStorage.setItem('isLoad', true);
 
-  // this.setCookie('budgetMonthValue', budgetMonthValue.value);
-  // this.setCookie('budgetDayValue', budgetDayValue.value);
-  // this.setCookie('expensesMonthValue', expensesMonthValue.value);
-  // this.setCookie('additionalIncomeValue', additionalIncomeValue.value);
-  // this.setCookie('additionalExpensesValue', additionalExpensesValue.value);
-  // this.setCookie('incomePeriodValue', incomePeriodValue.value);
-  // this.setCookie('targetMonthValue', targetMonthValue.value);
-  // this.setCookie('isLoad', true);
+ this.setCookie('budgetMonthValue', budgetMonthValue.value);
+ this.setCookie('budgetDayValue', budgetDayValue.value);
+ this.setCookie('expensesMonthValue', expensesMonthValue.value);
+ this.setCookie('additionalIncomeValue', additionalIncomeValue.value);
+ this.setCookie('additionalExpensesValue', additionalExpensesValue.value);
+ this.setCookie('incomePeriodValue', incomePeriodValue.value);
+ this.setCookie('targetMonthValue', targetMonthValue.value);
+ this.setCookie('isLoad', true);
 
 };
 
@@ -282,58 +282,64 @@ reset () {
       depositBank.removeEventListener('change', this.cahngePercent);
     }
   };
-  //создание куков
-  // setCookie(name, value, options = {}) {
-  //     options = {
-  //       path: '/',
-  //       expires: new Date(Date.now()), 
-  //       ...options
-  //     };
+  setCookie(name, value, options = {}) {
+    options = {
+      path: '/',
+      expires: new Date(Date.now() + 86400e3),
+      ...options
+    };
 
-  //     if(options.expires instanceof Date) {
-  //       options.expires = options.expires.toUTCString()
-  //     }
+    if (options.expires instanceof Date) {
+      options.expires = options.expires.toUTCString();
+    }
 
-  //     let updateCookie = name + '=' + value;
+    let updatedCookie = name + "=" + value;
 
-  //     for (let optionKey in options) {
-  //       updateCookie += "; " + optionKey;
-  //       let optionValue = options[optionKey];
-  //       if (optionValue !== true) {
-  //         updateCookie += "=" + optionValue;
-  //       }
-  //     }
-  //     document.cookie = updateCookie;
-  // };
-  // deleteAllCookies() {
-  //   const cookies = document.cookie.split(";");
-  //   for (let i = 0; i < cookies.length; i++) {
-  //     this.deleteCookie(cookies[i].split("=")[0]);
-  //   }
-  // };
-  // deleteCookie(name) {
-  //   this.setCookie(name, "", {
-  //     'max-age': -1
-  //   });
-  // };
-  // checkLSCookie() {
-  //   const cookies = document.cookie.split("; ");
+    for (let optionKey in options) {
+      updatedCookie += "; " + optionKey;
+      let optionValue = options[optionKey];
+      if (optionValue !== true) {
+        updatedCookie += "=" + optionValue;
+      }
+    }
 
-  //   outer:
-  //     for (let i = 0; i < localStorage.length; i++) {
-  //       for (let j = 0; j < cookies.length; j++) {
-  //         if (localStorage.key(i) === cookies[j].split("=")[0]) {
-  //           continue outer;
-  //         }
-  //       }
-  //       this.reset();
-  //       this.deleteAllCookies();
-  //     }
-  //   if (cookies.length !== 8) {
-  //     this.reset();
-  //     this.deleteAllCookies();
-  //   }
-  // };
+    document.cookie = updatedCookie;
+  };
+
+  //Удалить все cookies
+  deleteAllCookies() {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      this.deleteCookie(cookies[i].split("=")[0]);
+    }
+  };
+
+  //Удалить cookie
+  deleteCookie(name) {
+    this.setCookie(name, "", {
+      'max-age': -1
+    });
+  };
+
+  //Проверка соответствия localStorage и cookies
+  checkLSCookie() {
+    const cookies = document.cookie.split("; ");
+
+    outer:
+      for (let i = 0; i < localStorage.length; i++) {
+        for (let j = 0; j < cookies.length; j++) {
+          if (localStorage.key(i) === cookies[j].split("=")[0]) {
+            continue outer;
+          }
+        }
+        this.reset();
+        this.deleteAllCookies();
+      }
+    if (cookies.length !== 8) {
+      this.reset();
+      this.deleteAllCookies();
+    }
+  };
   eventListeners () {
     start.addEventListener('click', this.start.bind(this));
     expensesAdd.addEventListener('click', this.addIncExpBlock);
@@ -364,7 +370,7 @@ reset () {
       start.style.display = 'block';
       cansel.style.display = 'none';
     }
-    // this.checkLSCookie();
+    this.checkLSCookie();
   };
 
 };
