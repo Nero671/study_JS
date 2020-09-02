@@ -1,0 +1,24 @@
+.btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 15px;
+}
+
+.block1 {
+  width: 50px;
+  height: 50px;
+  background-color: blue;
+  position: relative;
+}
+
+.block2 {
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  position: relative;
+}
+
+.stop {
+  margin-left: 100px;
+}
