@@ -50,11 +50,21 @@
     const btnMenu = document.querySelector('.menu'),
           menu = document.querySelector('menu'),
           closeBtn = document.querySelector('.close-btn'),
-          menuItems = menu.querySelectorAll('ul>li');
+          menuItems = menu.querySelectorAll('ul>li'),
+          menuLinks = menu.querySelectorAll('li>a[href^="#"]');
     
     const handlerMenu = () => {
       menu.classList.toggle('active-menu');
     };
+
+    menuLinks.forEach(item => item.addEventListener('click', event => {
+      event.preventDefault();
+      const linkID = item.getAttribute('href');
+      document.querySelector(linkID).scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }));
 
     btnMenu.addEventListener('click', handlerMenu);
     closeBtn.addEventListener('click', handlerMenu);
@@ -62,6 +72,18 @@
   };
 
   toggleMenu();
+  
+  //scrollTo 
+  const btnScrollToContent = document.querySelector('a[href="#service-block"]');
+  btnScrollToContent.addEventListener('click', () => {
+    event.preventDefault();
+    const linkID = btnScrollToContent.getAttribute('href');
+    document.querySelector(linkID).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+
   //popup
 
   const togglePopu = () => {
@@ -96,6 +118,21 @@
       count = 0;
     });
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   togglePopu();
 
