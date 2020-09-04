@@ -65,16 +65,19 @@
         if (target.classList.contains('close-btn')) {
           handlerMenu();
         } else {
-          target = target.closest('li');
+          if(target.closest('li')) {
+            target = target.closest('li');
 
-          event.preventDefault();
-          const menuLink = target.querySelector('a[href^="#"]'),
-            linkID = menuLink.getAttribute('href');
-          document.querySelector(linkID).scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-          handlerMenu();
+            event.preventDefault();
+            const menuLink = target.querySelector('a[href^="#"]'),
+                  linkID = menuLink.getAttribute('href');
+            console.log(menuLink);
+            document.querySelector(linkID).scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+            handlerMenu();
+          }
         }
       }
     });
