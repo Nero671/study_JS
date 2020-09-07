@@ -27,6 +27,7 @@ class Todo {
     li.insertAdjacentHTML('beforeend', `
       <span class="text-todo">${todo.value}</span>
       <div class="todo-buttons">
+        <button class="todo-edit"></button>
         <button class="todo-remove"></button>
         <button class="todo-complete"></button>
       </div>
@@ -58,17 +59,18 @@ class Todo {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
 
-  deleteItem(targetKey) {
+  deleteItem(targetItem) {
+    const targetKey = targetItem.key;
     for (const key of this.todoData.keys()) {
       if (targetKey === key) {
         this.todoData.delete(targetKey);
       }
     }
-
     this.render();
   }
 
-  completedItem(targetKey) {
+  completedItem(targetItem) {
+    const targetKey = targetItem.key;
     for (const [key, value] of this.todoData) {
       if (targetKey === key && value.completed === false) {
         value.completed = true;
@@ -79,16 +81,51 @@ class Todo {
     this.render();
   }
 
+  animateComplete(targetItem) {
+    targetItem.style.transitionProperty = 'all';
+    targetItem.style.transitionProperty = '0.5s';
+    targetItem.style.opacity = 0;
+  }
+
+  animateDelete(targetItem) {
+    targetItem.style.transitionProperty = 'opacity';
+    targetItem.style.transitionDuration = '0.5s';
+    targetItem.style.opacity = 0;
+  }
+
+  todoEdit(targetItem) {
+    const targetKey = targetItem.key;
+    targetItem.contentEditable = 'true';
+    targetItem.addEventListener('blur', () => {
+      for (const [key, value] of this.todoData) {
+        if (targetKey === key) {
+          value.value = targetItem.textContent.trim();
+          this.addToStorage();
+        }
+      }
+      targetItem.contentEditable = 'false';
+    });
+  }
+
   handler() {
     document.querySelector('.todo-container').addEventListener('click', event => {
       event.preventDefault();
       const target = event.target;
       if (target.matches('.todo-complete')) {
-        target.key = target.closest('.todo-item').key;
-        this.completedItem(target.key);
+        const targetItem = target.closest('.todo-item');
+        this.animateComplete(targetItem);
+        setTimeout(() => {
+          this.completedItem(targetItem);
+        }, 500);
       } else if (target.matches('.todo-remove')) {
-        target.key = target.closest('.todo-item').key;
-        this.deleteItem(target.key);
+        const targetItem = target.closest('.todo-item');
+        this.animateDelete(targetItem);
+        setTimeout(() => {
+          this.deleteItem(targetItem);
+        }, 500);
+      } else if (target.matches('.todo-edit')) {
+        const targetItem = target.closest('.todo-item');
+        this.todoEdit(targetItem);
       }
     });
   }
