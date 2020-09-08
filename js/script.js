@@ -83,8 +83,9 @@ class Todo {
 
   animateComplete(targetItem) {
     targetItem.style.transitionProperty = 'all';
-    targetItem.style.transitionProperty = '0.5s';
+    targetItem.style.transitionDuration = '0.5s';
     targetItem.style.opacity = 0;
+    targetItem.style.transform = 'translateY(50%)';
   }
 
   animateDelete(targetItem) {
