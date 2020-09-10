@@ -396,6 +396,75 @@
 
   calc(100);
 
+  //send-ajax-form
+  const sendForm = () => {
+    const errorMessage = 'Что-то пошло не так...',
+      loadMessage = 'Загрузка...',
+      successMessage = 'Спасибо! Мы скоро с вами свяжемся!',
+      forms = document.querySelectorAll('form'),
+      statusMessage = document.createElement('div');
+
+    statusMessage.style.cssText = 'font-size: 2rem; color: #fff';
+
+    forms.forEach(item => {
+      item.addEventListener('input', event => {
+        if (event.target.matches('.form-phone')) {
+          event.target.value = event.target.value.replace(/^[^+\d]*(\+|\d)|\D/g, '$1');
+        } else if (event.target.matches('.mess') || event.target.matches('input[name="user_name"]')) {
+          event.target.value = event.target.value.replace(/[^А-ЯЁа-яё\s]/, '');
+        }
+      });
+    });
+
+
+    const postData = (body, outputData, errorData) => {
+      const request = new XMLHttpRequest();
+
+      request.addEventListener('readystatechange', () => {
+        if (request.readyState !== 4) {
+          return;
+        }
+
+        if (request.status === 200) {
+          outputData();
+        } else {
+          errorData(request.status);
+        }
+      });
+
+      request.open('POST', './server.php');
+      request.setRequestHeader('Content-Type', 'application/json');
+      request.send(JSON.stringify(body));
+    };
+
+
+    forms.forEach(item => {
+      item.addEventListener('submit', event => {
+        event.preventDefault();
+        item.appendChild(statusMessage);
+        statusMessage.textContent = loadMessage;
+        const formData = new FormData(item);
+
+        const body = {};
+        for (const value of formData.entries()) {
+          body[value[0]] = value[1];
+        }
+        postData(body, () => {
+          statusMessage.textContent = successMessage;
+        }, error => {
+          statusMessage.textContent = errorMessage;
+          console.error(error);
+        });
+        const inputs = item.querySelectorAll('input');
+        inputs.forEach(item => {
+          item.value = '';
+        });
+      });
+    });
+
+  };
+
+  sendForm();
 
 
 
