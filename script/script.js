@@ -318,7 +318,28 @@
 
   validateInput();
 
-  //Calculate
+  //Calculate && animateTotal
+  const animateTotal = ({
+    duration,
+    draw,
+    timing
+  }) => {
+    const start = performance.now();
+
+    requestAnimationFrame(function animateTotal(time) {
+      let timeFraction = (time - start) / duration;
+
+      if (timeFraction > 1) timeFraction = 1;
+
+      const progress = timing(timeFraction);
+      draw(progress);
+
+      if (timeFraction < 1) {
+        requestAnimationFrame(animateTotal);
+      }
+    });
+  };
+
   const calc = (price = 100) => {
     const calcBlock = document.querySelector('.calc-block'),
           calcType = document.querySelector('.calc-type'),
@@ -350,6 +371,16 @@
       } 
 
       totalValue.textContent = total;
+
+      animateTotal({
+        duration: 1000,
+        timing(timeFraction) {
+          return timeFraction;
+        },
+        draw(progress) {
+          totalValue.textContent = Math.floor(progress * total);
+        }
+      });
     };
 
     calcBlock.addEventListener('change', event => {
@@ -358,6 +389,7 @@
       if(target === calcType || target === calcSquare || target === calcDay || target === calcCount) {
         countSum();
       }
+      
     })
 
   };
