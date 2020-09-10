@@ -21,7 +21,7 @@ const replaceQuote = () => {
   const quote = document.querySelectorAll('div');
 
   quote.forEach(item => {
-    item.innerHTML = item.innerHTML.replace(/(["«'].*?["»'])/gi, `<mark>$1</mark>`);
+    item.innerHTML = item.innerHTML.replace(/«.+?»|".+?"/gi, (val)=> `<mark>${val}</mark>`);
   });
 };
 
