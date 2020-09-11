@@ -425,19 +425,18 @@
 				margin: auto;
 				margin-top: 10px;
 				background-color: #19b5fe;
-				animation: sk-rotating-plane 1.2s infinite ease-in-out;
+				border-radius: 100%;
+        animation: sk-spinner-pulse 1.0s infinite ease-in-out;
 			}
-			@keyframes sk-rotating-plane {
-				0% {
-					transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-				}
-				50% {
-					transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-				}
-				100% {
-					transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-				}
-			}
+			@keyframes sk-spinner-pulse {
+        0% {
+          transform: scale(0);
+        }
+        100% {
+          transform: scale(1.0);
+          opacity: 0;
+        }
+      }
 			`;
       document.head.appendChild(style);
     };
