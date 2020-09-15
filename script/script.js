@@ -442,30 +442,14 @@
     };
 
 
-    const postData = body => {
+    const postData = formData => fetch('./server.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      body: formData
+    });
 
-      return new Promise((resolve, reject) => {
-
-
-        const request = new XMLHttpRequest();
-
-        request.addEventListener('readystatechange', () => {
-          if (request.readyState !== 4) {
-            return;
-          }
-
-          if (request.status === 200) {
-            resolve();
-          } else {
-            reject(request.status);
-          }
-        });
-
-        request.open('POST', './server.php');
-        request.setRequestHeader('Content-Type', 'application/json');
-        request.send(JSON.stringify(body));
-      });
-    };
 
 
     forms.forEach(item => {
@@ -477,18 +461,18 @@
         statusMessage.classList.add('sk-rotating-plane');
         const formData = new FormData(item);
 
-        const body = {};
-        for (const value of formData.entries()) {
-          body[value[0]] = value[1];
-        }
-        postData(body, () => {
+        postData(formData).then(response => {
+          if (response.status !== 200) {
+            throw new Error('status network not 200');
+          }
           statusMessage.classList.remove('sk-rotating-plane');
           statusMessage.textContent = successMessage;
-        }, error => {
+        }).catch(error => {
           statusMessage.classList.remove('sk-rotating-plane');
           statusMessage.textContent = errorMessage;
           console.error(error);
         });
+
         const inputs = item.querySelectorAll('input');
         inputs.forEach(item => {
           item.value = '';
