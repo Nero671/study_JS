@@ -467,10 +467,16 @@
           }
           statusMessage.classList.remove('sk-rotating-plane');
           statusMessage.textContent = successMessage;
+          setTimeout(() => {
+            statusMessage.remove();
+          }, 500)
         }).catch(error => {
           statusMessage.classList.remove('sk-rotating-plane');
           statusMessage.textContent = errorMessage;
           console.error(error);
+          setTimeout(() => {
+            statusMessage.remove();
+          }, 500)
         });
 
         const inputs = item.querySelectorAll('input');
