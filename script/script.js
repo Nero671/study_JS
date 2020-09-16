@@ -481,10 +481,12 @@
         for (const value of formData.entries()) {
           body[value[0]] = value[1];
         }
-        postData(body, () => {
+         postData(body)
+          .then(() => {
           statusMessage.classList.remove('sk-rotating-plane');
           statusMessage.textContent = successMessage;
-        }, error => {
+        }) 
+          .catch(() => {
           statusMessage.classList.remove('sk-rotating-plane');
           statusMessage.textContent = errorMessage;
           console.error(error);
