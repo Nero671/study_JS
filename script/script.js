@@ -469,14 +469,14 @@
           statusMessage.textContent = successMessage;
           setTimeout(() => {
             statusMessage.remove();
-          }, 500)
+          }, 5000)
         }).catch(error => {
           statusMessage.classList.remove('sk-rotating-plane');
           statusMessage.textContent = errorMessage;
           console.error(error);
           setTimeout(() => {
             statusMessage.remove();
-          }, 500)
+          }, 5000)
         });
 
         const inputs = item.querySelectorAll('input');
